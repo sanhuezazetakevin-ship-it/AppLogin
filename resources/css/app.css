@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+
+body{
+    background: linear-gradient(135deg, #063068 10%, #2d5dee 100%);
+}
+.card-header{
+    background: linear-gradient(135deg, #b8c7f5 100%);
+
+}
+
+.form-control:hover{
+    outline: none;
+    border-color: #071fa76d;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 5px rgba(34, 19, 241, 0.1);
+    cursor: pointer;
+
+}
+
+.form-control:focus{
+    outline: none;
+    border-color: #1900ff;
+}
+
+.row{
+    margin-top: 100px;
+}
