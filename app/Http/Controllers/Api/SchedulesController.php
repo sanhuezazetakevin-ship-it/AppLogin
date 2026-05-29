@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Schedule;
+
 
 class SchedulesController extends Controller
 {
@@ -12,7 +14,8 @@ class SchedulesController extends Controller
      */
     public function index()
     {
-        //
+        $schedules = Schedule::all(); 
+        return view('schedule.index', compact('schedules'));
     }
 
     /**
