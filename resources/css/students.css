@@ -1,0 +1,206 @@
+/*tabla*/
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8fafc;
+    padding: 30px 15px;
+}
+
+/* Contenedor más ancho para que entren todos los datos */
+.container-full {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.table-card {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Evita que la web se rompa y añade scroll horizontal en pantallas chicas */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap; /* Evita saltos de línea raros dentro de las celdas */
+}
+
+.data-table th {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 14px 18px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.data-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Formatos de texto */
+.user-name {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.font-mono {
+    font-family: monospace;
+    font-weight: 500;
+}
+
+.text-muted {
+    color: #64748b;
+}
+
+/* Limita el ancho de la dirección si es muy larga */
+.text-truncate-dir {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Badges de Estado (Matriculado / Inactivo) */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-active {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.status-inactive {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.id-badge {
+    background-color: #f1f5f9;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-weight: 600;
+    color: #64748b;
+}
+
+/* Botones de acción */
+.text-center { text-align: center; }
+
+.action-group {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    font-size: 13px;
+}
+
+.edit-btn { background-color: #eff6ff; color: #2563eb; }
+.edit-btn:hover { background-color: #dbeafe; }
+
+.delete-btn { background-color: #fef2f2; color: #dc2626; }
+.delete-btn:hover { background-color: #fee2e2; }
+
+.empty-cell {
+    padding: 40px;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/*boton register*/
+/* Estructura del encabezado encima de la tabla */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 5px;
+}
+
+.table-header h2 {
+    font-size: 22px;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+/* Estilo Base del Botón */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+/* Botón Primario (Azul Indigo) */
+.btn-primary {
+    background-color: #4f46e5;
+    color: white;
+    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #4338ca;
+    transform: translateY(-1px); /* Efecto sutil de levante */
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+
+/* ------------------------------------------- 
+
+html css de create no te confundas
+
+------------------------------------------- */
+

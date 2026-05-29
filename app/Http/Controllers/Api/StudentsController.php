@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Student;
+
 
 class StudentsController extends Controller
 {
@@ -12,12 +14,19 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::all(); 
+
+        return view('student.index', compact('students'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    public function create()
+{
+    // Retorna la vista donde estará tu formulario de registro
+    return view('student.create'); 
+}
     public function store(Request $request)
     {
         //
@@ -34,9 +43,9 @@ class StudentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function  edit(Request $request, string $id)
     {
-        //
+        return view('student.create');
     }
 
     /**
@@ -44,6 +53,12 @@ class StudentsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+    // 2. Eliminar el registro de forma definitiva
+    $student->delete();
+
+    // 3. Redireccionar a la tabla con un mensaje de éxito para el usuario
+    return redirect()->route('students.index')->with('success', 'El estudiante ha sido eliminado correctamente.');
     }
 }
