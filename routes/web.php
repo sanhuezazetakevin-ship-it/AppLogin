@@ -1,13 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\GoogleController;
-use App\Http\Controllers\Api\StudentsController;
-use App\Http\Controllers\Api\TeachersController;
-use App\Http\Controllers\Api\CoursesController;
-use App\Http\Controllers\Api\SchedulesController;
-
-
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,4 +28,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-/*tablas*/
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::get('/login/github', [
+    LoginController::class,
+    'redirectToGithub'
+]);
+
+Route::get('/login/github/callback', [
+    LoginController::class,
+    'handleGithubCallback'
+]);

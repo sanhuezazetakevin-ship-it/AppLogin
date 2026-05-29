@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Laravel\Socialite\Facades\Socialite; // Buena práctica: Usar el Facade completo
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -82,4 +82,48 @@ class LoginController extends Controller
         // CRUCIAL: Debes retornar la redirección aquí para que no se quede en blanco
         return redirect()->intended($this->redirectTo);
     }
+    public function redirectToGithub()
+{
+    return Socialite::driver('github')->redirect();
+}
+
+// Callback de GitHub
+public function handleGithubCallback()
+{
+    try {
+
+        $githubUser = Socialite::driver('github')->user();
+
+        // Obtener email
+        $email = $githubUser->getEmail();
+
+        // Obtener nombre
+        $name = $githubUser->getName()
+            ?? $githubUser->getNickname()
+            ?? 'Usuario GitHub';
+
+        // Buscar usuario
+        $user = User::where('email', $email)->first();
+
+        // Crear usuario si no existe
+        if (!$user) {
+
+            $user = User::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => bcrypt(Str::random(16)),
+            ]);
+        }
+
+        // Login
+        Auth::login($user);
+
+        return redirect('/home');
+
+    } catch (\Exception $e) {
+
+        return redirect('/login')
+            ->with('error', 'Error con GitHub Login');
+    }
+}
 }
