@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Enrollment;
 class EnrollmentsController extends Controller
 {
     /**
@@ -12,7 +12,8 @@ class EnrollmentsController extends Controller
      */
     public function index()
     {
-        //
+        $enrollments = Enrollment::all(); 
+        return view('enrollment.index', compact('enrollments'));
     }
 
     /**

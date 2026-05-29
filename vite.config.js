@@ -8,6 +8,8 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
+                'resources/css/student.css',
+                'resources/css/students-create.css',
             ],
             refresh: true,
         }),
