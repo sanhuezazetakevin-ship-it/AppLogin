@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\LoginController;
 
-use App\Http\Controllers\StudentsController;
-use App\Http\Controllers\TeachersController;
-use App\Http\Controllers\CoursesController;
-use App\Http\Controllers\SchedulesController;
+use App\Http\Controllers\Api\StudentsController;
+use App\Http\Controllers\Api\TeachersController;
+use App\Http\Controllers\Api\CoursesController;
+use App\Http\Controllers\Api\SchedulesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,7 +25,7 @@ Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallb
 
 /* ================= DASHBOARD ================= */
 Route::middleware(['auth'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('home');
 });
 
 /* ================= CRUD ================= */

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Estudiante</title>
-    @vite(['resources/css/create-student.css'])
+    @vite(['resources/css/students-create.css'])
 </head>
 <body>
 
@@ -12,7 +12,7 @@
         
         <div class="form-header">
             <a href="{{ route('students.index') }}" class="btn-back">← Volver</a>
-            <h2>Editar Estudiante</h2>
+            <h2>---Editar informacion del Estudiante---</h2>
         </div>
 
         <form action="{{ route('students.update', $student->id) }}" method="POST">

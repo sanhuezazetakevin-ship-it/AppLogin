@@ -29,7 +29,7 @@ class StudentsController extends Controller
 }
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -37,7 +37,7 @@ class StudentsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -45,7 +45,10 @@ class StudentsController extends Controller
      */
     public function  edit(Request $request, string $id)
     {
-        return view('student.create');
+        $student = Student::findOrFail($id);
+
+    // 2. Pasas la variable a la vista usando compact('student')
+    return view('student.edit', compact('student'));
     }
 
     /**

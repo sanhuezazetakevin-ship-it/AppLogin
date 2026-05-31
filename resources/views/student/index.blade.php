@@ -11,20 +11,39 @@
 </head>
 <body>
 <div class="container-full">
-
-<div class="table-header">
-    <h2>Panel de Estudiantes</h2>
-    <a href="{{ route('students.create') }}" class="btn btn-primary">
-        <i class="fa-solid fa-user-plus"></i> Registrar Estudiante
+<div class="btn-exit">
+    <a href="{{ route('home') }}" class="btn btn-primary">
+        Volver
     </a>
 </div>
 
-<div class="table-card">
-    <div class="table-responsive">
-        <table class="data-table">
-            </table>
+<div class="table-header">
+    <h2>Panel de Estudiantes</h2>
+    <div class="header-actions">
+    <form action="colocas el controlador" method="ni idea" class="search-form">
+        <div class="search-input-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-line-cap="round" stroke-line-join="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            
+            <input 
+                type="text" 
+                name="dni" 
+                placeholder="Buscar estudiante por DNI..." 
+                maxlength="8"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                class="search-input"
+                required
+            >
+        </div>
+        <button type="submit" class="search-submit-btn">Buscar</button>
+    </form>
+    <a href="{{ route('students.create') }}" class="btn btn-primary">
+        <i class="fa-solid fa-user-plus"></i> Registrar Estudiante
+    </a>
     </div>
 </div>
+
 
 </div>
 
