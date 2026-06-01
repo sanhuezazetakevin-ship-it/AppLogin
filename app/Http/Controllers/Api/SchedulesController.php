@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
-
+use App\Models\Course;
 
 class SchedulesController extends Controller
 {
@@ -21,9 +21,10 @@ class SchedulesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        //
+        $courses = Course::all();
+        return view('schedule.create', compact('courses'));
     }
 
     /**
@@ -37,9 +38,13 @@ class SchedulesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function edit(Request $request, string $id)
     {
-        //
+        $schedule = Schedule::findOrFail($id);
+        
+        // Aquí también debes mandar los cursos para que el <select> no falle al editar
+        $courses = Course::all(); 
+        return view('schedule.edit', compact('schedule', 'courses'));
     }
 
     /**

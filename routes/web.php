@@ -20,8 +20,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /* ================= GOOGLE LOGIN ================= */
-Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/login/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/login/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 /* ================= DASHBOARD ================= */
 Route::middleware(['auth'])->get('/dashboard', function () {
