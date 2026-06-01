@@ -6,12 +6,33 @@
 }
 
 body {
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #cbd5e1 100%) ;
+    background: linear-gradient(
+        -45deg, 
+        #0f0c1b, /* Violeta ultra oscuro (base elegante) */
+        #241442, /* Violeta corporativo profundo */
+        #5b21b6, /* Violeta intenso para dar color */
+        #a78bfa  /* Lila claro para los reflejos de luz */
+    );
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    background-size: 400% 400%;
+    
+    /* 3. Llama a la animación (15 segundos, suave, infinita) */
+    animation: cambiarFondo 20s ease infinite;
+}
+@keyframes cambiarFondo {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .form-container {
