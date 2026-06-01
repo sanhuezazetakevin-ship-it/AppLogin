@@ -9,9 +9,36 @@
 }
 
 body {
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #cbd5e1 100%) ;
+    
     padding: 30px 15px;
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    
+    /* 1. Pon aquí tu degradado actual */
+    background: linear-gradient(
+        -45deg, 
+        #0f0c1b, /* Violeta ultra oscuro (base elegante) */
+        #241442, /* Violeta corporativo profundo */
+        #5b21b6, /* Violeta intenso para dar color */
+        #a78bfa  /* Lila claro para los reflejos de luz */
+    );
+    
+    /* 2. Amplía el fondo para que tenga espacio para moverse */
+    background-size: 400% 400%;
+    
+    /* 3. Llama a la animación (15 segundos, suave, infinita) */
+    animation: cambiarFondo 20s ease infinite;
+}
+@keyframes cambiarFondo {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 /* Contenedor más ancho para que entren todos los datos */
@@ -19,6 +46,7 @@ body {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
+    
 }
 
 .table-card {
@@ -27,6 +55,19 @@ body {
     border: 1px solid #e2e8f0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    
+}
+@keyframes pulsoBorde {
+    0% {
+        box-shadow: 0 0 0 0 rgb(255, 255, 255);
+    }
+    50% {
+        /* El brillo se expande 10 píxeles */
+        box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+    }
 }
 
 /* Evita que la web se rompa y añade scroll horizontal en pantallas chicas */
@@ -51,7 +92,9 @@ body {
     font-weight: 600;
     letter-spacing: 0.5px;
     border-bottom: 2px solid #e2e8f0;
+
 }
+
 
 .data-table td {
     padding: 14px 18px;
@@ -63,6 +106,8 @@ body {
 
 .data-table tbody tr:hover {
     background-color:#EAE9FC;
+    animation: pulsoBorde 1s infinite ease-in-out;
+    
 }
 
 /* Formatos de texto */
@@ -162,7 +207,7 @@ body {
 
 .table-header h2 {
     font-size: 22px;
-    color: #1e293b;
+    color: #000000;
     font-weight: 700;
 }
 
