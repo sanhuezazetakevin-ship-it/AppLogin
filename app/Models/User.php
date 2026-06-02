@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id', // ¡AÑADIDO! Permite guardar el ID de Google sin errores de seguridad
     ];
 
     /**
