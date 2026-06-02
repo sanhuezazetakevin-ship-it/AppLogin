@@ -23,7 +23,7 @@
                 <select name="course_id" required>
                     <option value="">-- Seleccione un Curso --</option>
                     @foreach($courses as $course)
-                        <option value="{{ $course->id }}">{{ $course->name }}</option>
+                         <option value="{{ $course->id }}">{{ $course->name }}</option>
                     @endforeach
                 </select>
             </div>

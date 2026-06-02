@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\StudentsController;
 use App\Http\Controllers\Api\TeachersController;
 use App\Http\Controllers\Api\CoursesController;
 use App\Http\Controllers\Api\SchedulesController;
+use App\Http\Controllers\Api\EnrollmentsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('teachers', TeachersController::class);
     Route::resource('courses', CoursesController::class);
     Route::resource('schedules', SchedulesController::class);
+    Route::resource('enrollments', EnrollmentsController::class);
 });
 
 /* ================= GITHUB LOGIN ================= */

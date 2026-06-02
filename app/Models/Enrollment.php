@@ -8,5 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Enrollment extends Model
 {
     /** @use HasFactory<\Database\Factories\EnrollmentFactory> */
-    use HasFactory;
+    protected $table = 'enrollments'; 
+
+    // Relación: Una matrícula pertenece a un estudiante
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    // Relación con Profesor (NUEVA)
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
 }
