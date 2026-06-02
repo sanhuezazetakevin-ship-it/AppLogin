@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -12,10 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    background-image:url('{{ asset('img/senatiimagen.png') }}');
     <style>
         :root{
-            --charcoal:#1F2D33;
+            /* Se aclaró el fondo base para que se fusione mejor con la imagen */
+            --charcoal:#0f1517;
             --coyote:#7A6C5D;
             --silk:#DDC9B4;
             --khaki:#BCAC9B;
@@ -34,19 +34,19 @@
             position:relative;
         }
 
-        /* Fondo institucional */
+        /* Fondo institucional cargando welcome1 */
         body::before{
             content:"";
             position:fixed;
             inset:0;
-            background-image:url('/img/senatiimagen.jpg');
+            background-image:url('{{ asset('img/welcome1.jpg') }}');
             background-size:cover;
             background-position:center;
-            opacity:.045;
+            background-repeat:no-repeat;
+            opacity:.65; /* Se aumentó considerablemente la opacidad para que se note la imagen */
             z-index:-2;
         }
-
-        /* Overlay profesional */
+        /* Overlay profesional translúcido */
         body::after{
             content:"";
             position:fixed;
@@ -54,15 +54,16 @@
             background:
                 linear-gradient(
                     to bottom,
-                    rgba(31,45,51,.94),
-                    rgba(31,45,51,.98)
+                    rgba(15,21,23,.4),
+                    rgba(15,21,23,.6)
                 );
             z-index:-1;
         }
 
         .glass{
-            background:rgba(255,255,255,.03);
-            border:1px solid rgba(255,255,255,.06);
+            background:rgba(255,255,255,.05);
+            border:1px solid rgba(255,255,255,.1);
+            backdrop-filter: blur(8px);
         }
 
         .soft-border{
@@ -81,36 +82,37 @@
         }
 
         .secondary-btn{
-            background:rgba(255,255,255,.04);
-            border:1px solid rgba(255,255,255,.08);
+            background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,255,255,.12);
+            backdrop-filter: blur(4px);
             transition:.25s ease;
         }
 
         .secondary-btn:hover{
-            background:rgba(255,255,255,.07);
+            background:rgba(255,255,255,.12);
         }
 
         .feature-card{
-            background:rgba(255,255,255,.025);
-            border:1px solid rgba(255,255,255,.06);
+            background:rgba(15,21,23,.65);
+            border:1px solid rgba(255,255,255,.08);
+            backdrop-filter: blur(6px);
             transition:.3s ease;
         }
 
         .feature-card:hover{
-            border-color:rgba(221,201,180,.16);
+            border-color:rgba(221,201,180,.3);
             transform:translateY(-2px);
         }
 
         .muted{
-            color:#A89B8F;
+            color:#cbd5e1; /* Color de texto secundario ligeramente más claro para contraste */
         }
     </style>
 </head>
 
 <body class="min-h-screen flex flex-col">
 
-    <!-- HEADER -->
-    <header class="w-full border-b border-white/5">
+    <header class="w-full border-b border-white/10 bg-black/20 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
             <a href="#" class="flex items-center gap-4">
@@ -125,7 +127,7 @@
                         {{ config('app.name', 'Laravel') }}
                     </h1>
 
-                    <p class="text-[11px] uppercase tracking-[0.25em] muted mt-1">
+                    <p class="text-[11px] uppercase tracking-[0.25em] muted mt-1 text-white/60">
                         Plataforma Académica
                     </p>
                 </div>
@@ -144,7 +146,7 @@
                     @else
 
                         <a href="{{ route('login') }}"
-                           class="text-sm text-[#BCAC9B] hover:text-white transition">
+                           class="text-sm text-[#DDC9B4] hover:text-white transition font-medium">
                             Iniciar sesión
                         </a>
 
@@ -165,7 +167,6 @@
         </div>
     </header>
 
-    <!-- HERO -->
     <main class="flex-1 flex items-center">
 
         <section class="w-full">
@@ -177,27 +178,23 @@
 
                         <div class="w-2 h-2 rounded-full bg-[#C17C74]"></div>
 
-                        <span class="text-xs font-medium tracking-wide text-[#C17C74]">
+                        <span class="text-xs font-medium tracking-wide text-[#silk]">
                             Plataforma institucional activa
                         </span>
 
                     </div>
 
-                    <h2 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight max-w-4xl">
-
+                    <h2 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight max-w-4xl drop-shadow-md">
                         Formación profesional
                         <span class="text-[#DDC9B4]">
                             moderna, accesible y centralizada
                         </span>
-
                     </h2>
 
-                    <p class="mt-8 text-lg leading-relaxed text-[#BCAC9B] max-w-2xl">
-
+                    <p class="mt-8 text-lg leading-relaxed text-white drop-shadow max-w-2xl font-medium">
                         Accede a tus cursos, materiales académicos,
                         seguimiento educativo y herramientas institucionales
                         desde una única plataforma segura.
-
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4 mt-10">
@@ -223,7 +220,7 @@
                         @endif
 
                         <a href="#servicios"
-                           class="secondary-btn px-7 py-4 rounded-2xl font-medium text-sm text-center">
+                           class="secondary-btn px-7 py-4 rounded-2xl font-medium text-sm text-center text-white">
                             Más información
                         </a>
 
@@ -231,21 +228,16 @@
 
                 </div>
 
-                <!-- FEATURES -->
                 <div id="servicios"
                      class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24">
 
                     <div class="feature-card rounded-3xl p-8">
 
-                        <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 text-lg">
-                            🔐
-                        </div>
-
                         <h3 class="text-lg font-semibold text-white mb-3">
                             Acceso Seguro
                         </h3>
 
-                        <p class="text-sm leading-relaxed muted">
+                        <p class="text-sm leading-relaxed text-white/70">
                             Protección institucional con autenticación moderna
                             y control seguro de acceso académico.
                         </p>
@@ -254,15 +246,11 @@
 
                     <div class="feature-card rounded-3xl p-8">
 
-                        <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 text-lg">
-                            📚
-                        </div>
-
                         <h3 class="text-lg font-semibold text-white mb-3">
                             Recursos Académicos
                         </h3>
 
-                        <p class="text-sm leading-relaxed muted">
+                        <p class="text-sm leading-relaxed text-white/70">
                             Materiales, contenidos digitales y herramientas
                             educativas centralizadas.
                         </p>
@@ -271,15 +259,11 @@
 
                     <div class="feature-card rounded-3xl p-8">
 
-                        <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 text-lg">
-                            📈
-                        </div>
-
                         <h3 class="text-lg font-semibold text-white mb-3">
                             Seguimiento Integral
                         </h3>
 
-                        <p class="text-sm leading-relaxed muted">
+                        <p class="text-sm leading-relaxed text-white/70">
                             Visualiza calificaciones, asistencia y progreso
                             académico en tiempo real.
                         </p>
@@ -293,17 +277,16 @@
 
     </main>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-white/5">
+    <footer class="border-t border-white/10 bg-black/20 backdrop-blur-sm">
 
         <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
 
-            <p class="text-xs muted">
+            <p class="text-xs text-white/60">
                 © {{ date('Y') }} {{ config('app.name', 'Laravel') }}.
                 Todos los derechos reservados.
             </p>
 
-            <div class="flex items-center gap-4 text-xs muted">
+            <div class="flex items-center gap-4 text-xs text-white/60">
 
                 <span>
                     Infraestructura Virtual
