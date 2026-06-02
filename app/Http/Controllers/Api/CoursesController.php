@@ -21,9 +21,10 @@ class CoursesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        //
+        
+        return view('course.create'); 
     }
 
     /**
@@ -37,9 +38,10 @@ class CoursesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function edit(Request $request, string $id)
     {
-        //
+        $course = course::findOrFail($id);
+        return view('course.edit', compact('course'));
     }
 
     /**
