@@ -14,7 +14,16 @@
             <a href="{{ route('schedules.index') }}" class="btn-back">← Volver</a>
             <h2>Nuevo Horario</h2>
         </div>
-
+@if ($errors->any())
+    <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+        <strong>¡Ups! Revisa los siguientes errores:</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
         <form action="{{ route('schedules.store') }}" method="POST">
             @csrf 
             
@@ -54,7 +63,7 @@
 
             <div class="form-group">
                 <label>Número de Aula</label>
-                <input type="text" name="number_classroom" placeholder="Ej. Aula 302 o Lab B" required>
+                <input type="text" name="number_of_classroom" placeholder="Ej. Aula 302 o Lab B" required>
             </div>
 
             <button type="submit" class="btn-submit">Guardar Horario</button>

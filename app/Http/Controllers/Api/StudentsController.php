@@ -11,97 +11,72 @@ class StudentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::all(); 
+        // Capturamos lo que el usuario escriba en un input de búsqueda llamado 'search'
+        $search = $request->input('search');
 
+        // Si hay una búsqueda, filtramos; si no, trae todos
+        $students = Student::when($search, function ($query, $search) {
+            return $query->where('dni', 'LIKE', "%{$search}%")
+                        ->orWhere('first_name', 'LIKE', "%{$search}%")
+                        ->orWhere('last_name', 'LIKE', "%{$search}%");
+        })->get();
+
+        // Retorna la vista index (donde harás tu tabla) pasándole los estudiantes
         return view('student.index', compact('students'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Muestra el formulario de creación (el que ya tienes)
     public function create()
     {
-        // Retorna la vista donde estará tu formulario de registro
-        return view('student.create'); 
+        return view('student.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * (AQUÍ SE GUARDA EL ESTUDIANTE)
-     */
+    // Guarda el nuevo estudiante
     public function store(Request $request)
     {
-        // 1. Validar los datos que vienen del formulario
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email',
-            'age' => 'required|integer'
+        $validated = $request->validate([
+            'first_name'    => 'required|string|max:255',
+            'last_name'     => 'required|string|max:255',
+            'dni'           => 'required|string|size:8|unique:students,dni',
+            'date_of_birth' => 'required|date',
+            'email'         => 'required|email|max:255|unique:students,email',
+            'phone_number'  => 'nullable|string|max:20',
+            'address'       => 'nullable|string|max:255',
         ]);
 
-        // 2. Guardar en la base de datos
-        Student::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'age' => $request->age,
-        ]);
+        Student::create($validated);
 
-        // 3. Redireccionar a la lista con un mensaje de éxito
-        return redirect()->route('students.index')->with('success', 'El estudiante ha sido guardado correctamente.');
+        return redirect()->route('students.index')->with('success', 'Estudiante registrado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // 2. MOSTRAR FORMULARIO DE EDICIÓN (Busca automáticamente por ID)
+    public function edit(Student $student)
     {
-        $student = Student::findOrFail($id);
-        return view('student.show', compact('student'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $student = Student::findOrFail($id);
-
-        // Pasas la variable a la vista usando compact('student')
+        // Laravel busca al estudiante por su ID en la BD y lo pasa a la vista de edición
         return view('student.edit', compact('student'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * (AQUÍ SE MODIFICA EL ESTUDIANTE)
-     */
-    public function update(Request $request, string $id)
+    // 3. ACTUALIZAR LOS DATOS EN LA BD
+    public function update(Request $request, Student $student)
     {
-        // 1. Buscar al estudiante que se va a modificar
-        $student = Student::findOrFail($id);
-
-        // 2. Validar los nuevos datos (el email ignora el ID actual para que no choque consigo mismo)
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email,' . $id,
-            'age' => 'required|integer'
+        // Validamos (con la excepción de que el DNI y Email actual pertenecen a este alumno)
+        $validated = $request->validate([
+            'first_name'    => 'required|string|max:255',
+            'last_name'     => 'required|string|max:255',
+            'dni'           => 'required|string|size:8|unique:students,dni,' . $student->id,
+            'date_of_birth' => 'required|date',
+            'email'         => 'required|email|max:255|unique:students,email,' . $student->id,
+            'phone_number'  => 'nullable|string|max:20',
+            'address'       => 'nullable|string|max:255',
         ]);
 
-        // 3. Actualizar los datos en la base de datos
-        $student->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'age' => $request->age,
-        ]);
+        // Guardamos los cambios
+        $student->update($validated);
 
-        // 4. Redireccionar con mensaje de éxito
-        return redirect()->route('students.index')->with('success', 'El estudiante ha sido modificado correctamente.');
+        return redirect()->route('student.index')->with('success', 'Estudiante actualizado con éxito.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     * (AQUÍ SE ELIMINA EL ESTUDIANTE)
-     */
     public function destroy(string $id)
     {
         $student = Student::findOrFail($id);

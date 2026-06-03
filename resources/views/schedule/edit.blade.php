@@ -56,7 +56,7 @@
 
             <div class="form-group">
                 <label>Número de Aula</label>
-                <input type="text" name="number_classroom" value="{{ $schedule->number_of_classroom }}" required>
+                <input type="text" name="number_of_classroom" value="{{ $schedule->number_of_classroom }}" required>
             </div>
 
             <button type="submit" class="btn-submit">Actualizar Cambios</button>

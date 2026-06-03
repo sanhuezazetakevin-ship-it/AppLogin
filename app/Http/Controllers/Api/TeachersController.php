@@ -9,46 +9,63 @@ use App\Models\Teacher;
 
 class TeachersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $teachers = Teacher::all(); 
+        $search = $request->input('search');
+        $teachers = Teacher::when($search, function ($query, $search) {
+            return $query->where('first_name', 'LIKE', "%{$search}%")
+                        ->orWhere('last_name', 'LIKE', "%{$search}%")
+                        ->orWhere('specialty', 'LIKE', "%{$search}%");
+        })->get();
+
         return view('teacher.index', compact('teachers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function create(Request $request)
-    {   
-        
+    // Mostrar Formulario de Registro
+    public function create()
+    {
         return view('teacher.create');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Guardar en la Base de Datos
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'specialty'  => 'required|string|max:255',
+        ]);
+
+        Teacher::create($validated);
+
+        return redirect()->route('teachers.index')->with('success', 'Profesor registrado con éxito.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function edit(Request $request, string $id)
+    // Mostrar Formulario de Edición
+    public function edit(Teacher $teacher)
     {
-        $teacher = teacher::findOrFail($id);
         return view('teacher.edit', compact('teacher'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Actualizar Profesor
+    public function update(Request $request, Teacher $teacher)
     {
-        //
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'specialty'  => 'required|string|max:255',
+        ]);
+
+        $teacher->update($validated);
+
+        return redirect()->route('teachers.index')->with('success', 'Datos del profesor actualizados.');
+    }
+
+    // Eliminar Profesor
+    public function destroy(Teacher $teacher)
+    {
+        $teacher->delete();
+
+        return redirect()->route('teachers.index')->with('success', 'Profesor eliminado correctamente.');
     }
 }

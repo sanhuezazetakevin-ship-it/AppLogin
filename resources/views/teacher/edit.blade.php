@@ -15,7 +15,7 @@
             <h2>--- Editar información del Profesor ---</h2>
         </div>
 
-        <form action="{{ route('teachers.edit', $teacher->id) }}" method="POST">
+        <form action="{{ route('teachers.update', $teacher->id) }}" method="POST">  
             @csrf 
             @method('PUT') 
 

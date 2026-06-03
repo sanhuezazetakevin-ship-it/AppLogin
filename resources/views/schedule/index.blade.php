@@ -29,11 +29,17 @@
                 <input 
                     type="text" 
                     name="search" 
-                    placeholder="Buscar por día o aula..." 
+                    placeholder="Buscar por curso o aula..." 
+                    value="{{ request('search') }}" 
                     class="search-input"
+                    required
                 >
             </div>
             <button type="submit" class="search-submit-btn">Buscar</button>
+            
+            @if(request('search'))
+                <a href="{{ route('schedules.index') }}" class="btn btn-primary" style="margin-left: 5px; text-decoration: none;">Limpiar</a>
+            @endif
         </form>
         <a href="{{ route('schedules.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-calendar-plus"></i> Registrar Horario

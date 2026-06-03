@@ -15,7 +15,7 @@
             <h2>Nuevo Curso</h2>
         </div>
 
-        <form action="" method="">
+        <form action="{{ route('courses.store') }}" method="POST">
             @csrf 
             
             <div class="form-group">

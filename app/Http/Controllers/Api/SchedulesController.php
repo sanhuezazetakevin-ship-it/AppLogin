@@ -12,46 +12,73 @@ class SchedulesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $schedules = Schedule::all(); 
+        $search = $request->input('search');
+
+        // 'with(['course'])' precarga los cursos para evitar consultas lentas
+        $schedules = Schedule::with(['course'])
+            ->when($search, function ($query, $search) {
+                return $query->where('number_of_classroom', 'LIKE', "%{$search}%")
+                             ->orWhereHas('course', function ($q) use ($search) {
+                                $q->where('name', 'LIKE', "%{$search}%");
+                             });
+            })->get();
+
         return view('schedule.index', compact('schedules'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function create(Request $request)
+    // Mostrar formulario de registro (Pasamos los cursos para el select)
+    public function create()
     {
         $courses = Course::all();
         return view('schedule.create', compact('courses'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Guardar en la base de datos
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'course_id'           => 'required|exists:courses,id', // Valida que el curso exista en la tabla 'courses'
+            'day_of_week'         => 'required|string|max:255',
+            'start_time'          => 'required',
+            'end_time'            => 'required',
+            'number_of_classroom' => 'required|string|max:255',
+        ]);
+
+        Schedule::create($validated);
+
+        return redirect()->route('schedules.index')->with('success', 'Horario asignado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function edit(Request $request, string $id)
+    // Mostrar formulario de edición
+    public function edit(Schedule $schedule)
     {
-        $schedule = Schedule::findOrFail($id);
-        
-        // Aquí también debes mandar los cursos para que el <select> no falle al editar
-        $courses = Course::all(); 
+        $courses = Course::all();
         return view('schedule.edit', compact('schedule', 'courses'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Actualizar los datos del horario
+    public function update(Request $request, Schedule $schedule)
     {
-        //
+        $validated = $request->validate([
+            'course_id'           => 'required|exists:courses,id',
+            'day_of_week'         => 'required|string|max:255',
+            'start_time'          => 'required',
+            'end_time'            => 'required',
+            'number_of_classroom' => 'required|string|max:255',
+        ]);
+
+        $schedule->update($validated);
+
+        return redirect()->route('schedules.index')->with('success', 'Horario actualizado con éxito.');
+    }
+
+    // Eliminar un horario
+    public function destroy(Schedule $schedule)
+    {
+        $schedule->delete();
+
+        return redirect()->route('schedules.index')->with('success', 'Horario eliminado correctamente.');
     }
 }

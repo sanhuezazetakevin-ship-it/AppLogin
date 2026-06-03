@@ -29,11 +29,17 @@
                 <input 
                     type="text" 
                     name="search" 
-                    placeholder="Buscar curso por nombre o código..." 
+                    placeholder="Buscar por nombre o código..." 
+                    value="{{ request('search') }}" 
                     class="search-input"
+                    required
                 >
             </div>
             <button type="submit" class="search-submit-btn">Buscar</button>
+            
+            @if(request('search'))
+                <a href="{{ route('courses.index') }}" class="btn btn-primary" style="margin-left: 5px; text-decoration: none;">Limpiar</a>
+            @endif
         </form>
         <a href="{{ route('courses.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-book-medical"></i> Registrar Curso
