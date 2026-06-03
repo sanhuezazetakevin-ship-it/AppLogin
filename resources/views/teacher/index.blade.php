@@ -20,6 +20,7 @@
 <div class="table-header">
     <h2>Panel de Profesores</h2>
     <div class="header-actions">
+        
         <form action="{{ route('teachers.index') }}" method="GET" class="search-form">
             <div class="search-input-wrapper">
                 <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,11 +30,17 @@
                 <input 
                     type="text" 
                     name="search" 
-                    placeholder="Buscar profesor..." 
+                    placeholder="Buscar por especialidad..." 
+                    value="{{ request('search') }}" 
                     class="search-input"
+                    required
                 >
             </div>
             <button type="submit" class="search-submit-btn">Buscar</button>
+            
+            @if(request('search'))
+                <a href="{{ route('teachers.index') }}" class="search-submit-btn" style="margin-left: 5px; text-decoration: none;">Limpiar</a>
+            @endif
         </form>
         <a href="{{ route('teachers.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-user-plus"></i> Registrar Profesor

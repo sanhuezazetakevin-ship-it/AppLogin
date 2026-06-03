@@ -27,7 +27,7 @@ Route::get('/login/google/callback', [GoogleController::class, 'handleGoogleCall
 /* ================= DASHBOARD ================= */
 Route::middleware(['auth'])->get('/dashboard', function () {
     return view('home');
-});
+}); 
 
 /* ================= CRUD ================= */
 Route::middleware(['auth'])->group(function () {

@@ -25,15 +25,19 @@
                 <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                
                 <input 
                     type="text" 
                     name="search" 
-                    placeholder="Buscar matrícula por estudiante o ciclo..." 
+                    placeholder="Buscar por curso..." 
+                    value="{{ request('search') }}" 
                     class="search-input"
+                    required
                 >
             </div>
             <button type="submit" class="search-submit-btn">Buscar</button>
+            @if(request('search'))
+                <a href="{{ route('enrollments.index') }}" class="btn btn-primary" style="margin-left: 5px; text-decoration: none;">Limpiar</a>
+            @endif
         </form>
         <a href="{{ route('enrollments.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-book-medical"></i> Registrar Matrícula
@@ -81,7 +85,7 @@
                                 {{-- Celda de Curso --}}
                                 <td>
                                     @if($enrollment->course)
-                                    [{{ $enrollment->course->id }}] <strong>{{ $enrollment->course->name }}</strong> {{-- O ->nombre si está en español --}}
+                                    [{{ $enrollment->course->id }}] <strong>{{ $enrollment->course->name }} ({{$enrollment->course->code}})</strong> {{-- O ->nombre si está en español --}}
                                         @else
                                     <span class="text-muted">#{{ $enrollment->course_id }}</span>
                                         @endif

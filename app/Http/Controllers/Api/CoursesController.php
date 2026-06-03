@@ -12,43 +12,66 @@ class CoursesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all(); 
+        $search = $request->input('search');
+
+        // Busca coincidencias por nombre o por el código único del curso
+        $courses = Course::when($search, function ($query, $search) {
+            return $query->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('code', 'LIKE', "%{$search}%");
+        })->get();
+
         return view('course.index', compact('courses'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function create(Request $request)
+    // Mostrar formulario de registro
+    public function create()
     {
-        
-        return view('course.create'); 
+        return view('course.create');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Guardar en la base de datos
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name'        => 'required|string|max:255',
+            'code'        => 'required|string|max:255|unique:courses,code',
+            'credits'     => 'required|integer|min:1',
+            'description' => 'nullable|string',
+        ]);
+
+        Course::create($validated);
+
+        return redirect()->route('courses.index')->with('success', 'Curso registrado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function edit(Request $request, string $id)
+    // Mostrar formulario de edición
+    public function edit(Course $course)
     {
-        $course = course::findOrFail($id);
         return view('course.edit', compact('course'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Actualizar los datos del curso
+    public function update(Request $request, Course $course)
     {
-        //
+        $validated = $request->validate([
+            'name'        => 'required|string|max:255',
+            'code'        => 'required|string|max:255|unique:courses,code,' . $course->id,
+            'credits'     => 'required|integer|min:1',
+            'description' => 'nullable|string',
+        ]);
+
+        $course->update($validated);
+
+        return redirect()->route('courses.index')->with('success', 'Curso actualizado con éxito.');
+    }
+
+    // Eliminar un curso
+    public function destroy(Course $course)
+    {
+        $course->delete();
+
+        return redirect()->route('courses.index')->with('success', 'Curso eliminado correctamente.');
     }
 }

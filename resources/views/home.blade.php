@@ -24,6 +24,7 @@
             border-right: 1px solid rgba(255, 255, 255, 0.05);
             padding: 2.5rem 1.5rem;
             flex-shrink: 0;
+            
         }
 
         .main-content {
@@ -85,6 +86,8 @@
             <a href="{{ url('/courses') }}" class="nav-link-custom">Cursos</a>
             <a href="{{ url('/students') }}" class="nav-link-custom">Estudiantes</a>
             <a href="{{ url('/teachers') }}" class="nav-link-custom">Profesores</a>
+            <a href="{{ url('/enrollments') }}" class="nav-link-custom">Matriculas</a>
+            <a href="{{ url('/schedules') }}" class="nav-link-custom">Horarios</a>
         </nav>
     </aside>
 
