@@ -75,7 +75,7 @@ class StudentsController extends Controller
         // Guardamos los cambios
         $student->update($validated);
 
-        return redirect()->route('student.index')->with('success', 'Estudiante actualizado con éxito.');
+        return redirect()->route('students.index')->with('success', 'Estudiante actualizado con éxito.');
     }
     public function destroy(string $id)
     {
